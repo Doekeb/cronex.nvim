@@ -30,6 +30,12 @@ The default is [cronstrue](https://www.npmjs.com/package/cronstrue), which is th
 
 [Install the `cronstrue` library](https://www.npmjs.com/package/cronstrue) and make sure that the command `cronstrue` is available in the environment where your buffer is being shown.
 
+[Mason](https://github.com/mason-org/mason.nvim) users can alternatively install `cronstrue` with `:MasonInstall cronstrue` or by adding it to the `ensure_installed` list:
+
+```lua
+require("mason-tool-installer").setup({ ensure_installed = { "cronstrue" } })
+```
+
 That will use the `cronstrue` library under the hood to generate the explanations.
 
 ### Installation
@@ -105,11 +111,11 @@ require("cronex").setup({
     -- User can manually on any filetype turn explanations on(off) with the commands CronExplainedEnable(CronExplainedDisable)
     file_patterns = { "*.yaml", "*.yml", "*.tf", "*.cfg", "*.config", "*.conf" },
     extractor = { -- Configuration on how to extract cron expressions goes here:
-        -- cron_from_line: Function to search cron expression in line 
+        -- cron_from_line: Function to search cron expression in line
         cron_from_line = require("cronex.cron_from_line").cron_from_line,
         -- extract: Function returning a table with pairs (line_number, cron)
         extract = require("cronex.extract").extract,
-        },
+    },
     explainer = { -- Configuration on how to explain one cron expression goes here
         -- Command to call an external program that will translate the cron expression
         -- eg: "* * * * *" -> Every minute
@@ -117,7 +123,7 @@ require("cronex").setup({
         -- examples:
         -- "/path/to/miniconda3/envs/neovim/bin/cronstrue" (point to a conda virtualenv)
         -- "python explainer.py" (assuming you have such a python script available)
-        cmd = "cronstrue",  -- or a table, eg: cmd = {"bash", "./my-cron-script.sh"}
+        cmd = "cronstrue", -- or a table, eg: cmd = {"bash", "./my-cron-script.sh"}
         -- Optional arguments to pass to the command
         -- eg: "/path/to/a/go/binary"  (assuming you have a go binary)
         -- args = { "-print-all" }  (assuming the program understands the flag 'print-all')
@@ -131,7 +137,7 @@ require("cronex").setup({
     -- using require("cronex.format").all_after_colon,
     format = function(s)
         return s
-    end
+    end,
 })
 ```
 
@@ -183,10 +189,10 @@ require("cronex").setup({
                 t[i - 1] = string.format("line %s says --> %s ", i - 1, cron_from_line(line))
             end
             return t
-        end
+        end,
     },
     explainer = {
-        cmd = "echo" -- just echo the what extract produces
+        cmd = "echo", -- just echo the what extract produces
     },
 })
 ```
@@ -230,8 +236,8 @@ require("cronex").setup({
     explainer = {
         cmd = "cronstrue",
         args = {},
-        timeout = 10000
-    } 
+        timeout = 10000,
+    },
 })
 ```
 For example, you can have `cronstrue` installed in a conda virtualenv.
